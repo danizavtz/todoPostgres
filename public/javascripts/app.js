@@ -2,7 +2,7 @@ angular.module('nodeTodo', [])
     .controller('mainController', function($scope, $http) {
         $scope.formData = {};
         $scope.todoData = {};
-        var router = require('../server/routes/index');
+
         //Get all todos
         $http.get('api/v1/todos').success(function(data) {
             $scope.todoData = data;
@@ -24,12 +24,15 @@ angular.module('nodeTodo', [])
         }
 
 
-        //delete a todo
-        $http.delete('api/v1/todos/' + todoID).success(function(data) {
-                $scope.todoData = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
+        //delete todo
+        $scope.deleteTodo = function(todoID) {
+            $http.delete('api/v1/todos/' + todoID).success(function(data) {
+                    $scope.todoData = data;
+                    console.log(data);
+                })
+                .error(function(data) {
+                    console.log('Error: ' + data);
+                });
+        };
+
     });
